@@ -1,65 +1,74 @@
-//starting with a first project of the life
-
 //      Attendence      //
 
 #include<stdio.h>
-#include<stdlib.h>
 #include<math.h>
 #include<conio.h>
 
-
-void randomcode();
-void main()
+void main() 
 {
-    int n,i;
-    char rollname[500][500];
-
-    printf("Hiii, How are you?\n\n");
-
-    //counting number of students in a class
-    printf("Enter number of students are there in the class.....");
-    scanf("%d",&n);
-    printf("\n\n");
-    
-
-    //assiging names of students in a array 
-    printf("Enter your names according to the roll num:\n");
-    for (i=0 ; i<n ; i++)
-        {
-            scanf("%s",&rollname[i]);
-        }
-    printf("\n\n");
-    clrscr();
+    FILE *fptr;
+    int i,n,ID[1000],testid,count=0;
+    char pass[1000],testpass[1000],ch;
 
 
-    //printing names of students
-    printf("Your names according to your names are as follows:\n");
-    for (i=0 ; i<n ; i++)
-        {
-            printf("%d - %s\n",i+1,rollname[i]);
-        }
-    printf("\n\n\n\n");
+    printf("Enter 1 to make new entry else press any Key:");
+    scanf("%c",&ch);
+    printf("\n\n\n");
 
-    //calling randoncode fuction
-    randomcode();
-
-}
-
-void randomcode()
-{   
-    int c, n;
-    char ch;
-
-        printf("A random numbers is.....\n");
-
-        /*for (c = 1; c <= n; c++)
-        {
-            n = rand();
-        }*/
-       
-       
-        n = rand();
-        printf("%d",n);
+    switch (ch)
+    {
+        case '1':  
         
+        fptr = fopen("D:\\record.txt","r+");
+        //taking number of teachers (n)
+        printf("Enter number of Teachers:\n");
+        scanf("%d",&n);
+
+        //taking ID and Password from user:
+        printf("Make New Account ID and Password\n");
+        for(i=0 ; i<n ; i++)
+        {
+            scanf("%d  %s",&ID[i],&pass[i]);
+            fprintf(fptr,"ID = %d\n",ID[i]);
+            fprintf(fptr,"Password = %s\n",pass[i]);  
+        }
+        fclose(fptr);    
+        break;
+
+        case '2':
+
+        // checking id and password
+
+        fptr = fopen("D:\\record.txt","r+");
+
+        //entering ID and Password and checking them
+        printf("Enter Your ID:\n");
+        scanf("%d",&testid);
+        printf("Enter Your Password:\n");
+        scanf(" %s",&testpass);
+
+
+        printf("LOGIN:\n\n");
+        for (i=0 ; i<n ; i++)
+        {
+            if (ID[i]==testid && pass[i]==testpass)
+            {
+                count++;
+                break;
+            }
+        
+        }
+        fclose(fptr);   
+        break;
+    }
+
+
+
+    //checking if password is right or wrong    
+    if (count>0)
+    {
+        printf("SUCESSFULLY LOGED IN :)\n");
+    }
+
 
 }
